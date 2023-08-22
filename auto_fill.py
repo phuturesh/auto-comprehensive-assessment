@@ -10,7 +10,6 @@ driver = webdriver.Chrome()
 # 如果网址有变, 请自行修改
 driver.get("")
 
-
 username = driver.find_element(by=By.ID, value="un")
 password = driver.find_element(by=By.ID, value="pd")
 # 下面两行输入你的用户名和密码
@@ -21,7 +20,7 @@ print("waiting for logging in")
 time.sleep(20)
 driver.implicitly_wait(2)
 
-grades = ["25", "45", "10", "10", "10"]
+grades = ["20", "45", "10", "10", "10"]
 
 # 一轮只能处理一个页面的同学
 def fill_in_one_page(page):
@@ -39,17 +38,17 @@ def fill_in_one_page(page):
         count = 0
         for blank in blanks:
             if count < 5:
+                blank.clear()
                 blank.send_keys(grades[count])
                 count += 1
             else:
                 break
         button = driver.find_element(by=By.CLASS_NAME, value="el-button--primary")
 
-
         button.click()
         driver.back()
 
-for pn in range(1, page_num):
+for pn in range(1, page_num+1):
     fill_in_one_page(pn)
 
 print("finish")
