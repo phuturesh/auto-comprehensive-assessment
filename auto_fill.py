@@ -8,10 +8,11 @@ print("imported normally")
 
 driver = webdriver.Chrome()
 # 如果网址有变, 请自行修改
-driver.get("http://172.31.126.2/login?redirect=/user/profile")
+driver.get("http://172.31.126.2/prod-api/casLogin?source=1")
 
-username=driver.find_element(by="xpath",value="/html/body/div/div/form/div[1]/div/div/input")
-password = driver.find_element(by="xpath",value="/html/body/div/div/form/div[2]/div/div[1]/input")
+username = driver.find_element(by=By.ID, value="un")
+password = driver.find_element(by=By.ID, value="pd")
+
 
 # 下面两行输入你的用户名和密码，两者皆输入你的学号，后续不需要输验证码
 username.clear()
@@ -23,7 +24,7 @@ print("waiting for logging in")
 time.sleep(20)
 driver.implicitly_wait(2)
 
-grades = ["25", "45", "10", "10", "10"]
+grades = ["20", "45", "10", "10", "10"]
 
 # 一轮只能处理一个页面的同学
 def fill_in_one_page(page):
@@ -33,7 +34,7 @@ def fill_in_one_page(page):
             nextpage_button.click()
 
         time.sleep(1)
-        print(f"deal with the {i}th student")
+        print(f"dealing with the {i}th student")
         links = driver.find_elements(by=By.CLASS_NAME, value="action")
         links[i].click()
         
