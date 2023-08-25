@@ -1,4 +1,4 @@
-page_num = 3 # 你需要评价的同学的页数
+page_num = 4 # 你需要评价的同学的页数
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -8,11 +8,14 @@ print("imported normally")
 
 driver = webdriver.Chrome()
 # 如果网址有变, 请自行修改
-driver.get("")
+driver.get("http://172.31.126.2/login?redirect=/user/profile")
 
-username = driver.find_element(by=By.ID, value="un")
-password = driver.find_element(by=By.ID, value="pd")
+username=driver.find_element(by="xpath",value="/html/body/div/div/form/div[1]/div/div/input")
+password = driver.find_element(by="xpath",value="/html/body/div/div/form/div[2]/div/div[1]/input")
+
 # 下面两行输入你的用户名和密码
+username.clear()
+password.clear()
 username.send_keys("")
 password.send_keys("")
 # 你有20秒完成: 输入验证码, 登录, 点击左侧"班级互评"按钮, 如果不够, 请修改sleep后面的数字(秒)
@@ -20,7 +23,7 @@ print("waiting for logging in")
 time.sleep(20)
 driver.implicitly_wait(2)
 
-grades = ["20", "45", "10", "10", "10"]
+grades = ["25", "45", "10", "10", "10"]
 
 # 一轮只能处理一个页面的同学
 def fill_in_one_page(page):
