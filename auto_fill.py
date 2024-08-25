@@ -1,4 +1,5 @@
 page_num = 4 # 你需要评价的同学的页数
+stu_id = "302xxxxxxx" # 输入你的学号，后续不需要输验证码
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -7,14 +8,15 @@ import time
 print("imported normally")
 
 driver = webdriver.Chrome()
+# driver = webdriver.ChromiumEdge()
+
 # 如果网址有变, 请自行修改
 driver.get("http://172.31.126.2/login?redirect=/user/profile")
+driver.maximize_window()
 
 username=driver.find_element(by="xpath",value="/html/body/div/div/form/div[1]/div/div/input")
 password = driver.find_element(by="xpath",value="/html/body/div/div/form/div[2]/div/div[1]/input")
 driver.implicitly_wait(2)
-# 下面输入你的学号，后续不需要输验证码
-stu_id = "302xxxxxxx"
 
 username.clear()
 password.clear()
@@ -41,14 +43,9 @@ def fill_in_one_page(page):
         links[i].click()
         
         blanks = driver.find_elements(by=By.CLASS_NAME, value="el-input__inner")
-        count = 0
-        for blank in blanks:
-            if count < 5:
-                blank.clear()
-                blank.send_keys(grades[count])
-                count += 1
-            else:
-                break
+        for count, blank in enumerate(blanks[:5]):
+            blank.clear()
+            blank.send_keys(grades[count])
         button = driver.find_element(by=By.CLASS_NAME, value="el-button--primary")
 
         button.click()
