@@ -1,5 +1,9 @@
 page_num = 4 # 你需要评价的同学的页数
 stu_id = "302xxxxxxx" # 输入你的学号，后续不需要输验证码
+# 打分列表, 依次为德智体美劳
+# grades = ["20", "45", "10", "10", "10"]
+grades = ["23.75", "42.75", "9.5", "9.5", "9.5"]
+# grades = ["100", "100", "100", "100", "100"]
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -28,13 +32,11 @@ login_button.click()
 cross_vali_button = driver.find_elements(by=By.CLASS_NAME, value="submenu-title-noDropdown")[1]
 cross_vali_button.click()
 
-# 打分列表, 依次为德智体美劳
-grades = ["20", "45", "10", "10", "10"]
 # 一轮只能处理一个页面的同学
 def fill_in_one_page(page):
     for i in range(0, 10):
         nextpage_button = driver.find_element(by=By.CLASS_NAME, value="btn-next")
-        for p in range(1, page):
+        for _ in range(1, page):
             nextpage_button.click()
 
         time.sleep(1)
